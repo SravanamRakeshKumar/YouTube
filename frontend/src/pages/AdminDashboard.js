@@ -30,13 +30,22 @@ const AdminDashboard = () => {
   ];
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (!token) {
-      navigate('/admin/login');
-      return;
-    }
-    loadDashboardData();
-  }, [navigate]);
+  const token = localStorage.getItem('adminToken');
+  if (!token) {
+    navigate('/admin/login');
+    return;
+  }
+  loadDashboardData();
+}, [navigate]); // Add loadDashboardData to dependencies
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('adminToken');
+  //   if (!token) {
+  //     navigate('/admin/login');
+  //     return;
+  //   }
+  //   loadDashboardData();
+  // }, [navigate]);
 
   const loadDashboardData = async () => {
     try {

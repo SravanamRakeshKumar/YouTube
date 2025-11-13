@@ -103,27 +103,27 @@ addCourse: async (courseKey, courseName, courseIcon) => {
   },
 
   // Add questions to existing day
-  addQuestions: async (course, day, questions) => {
-    try {
-      const token = localStorage.getItem('adminToken');
-      const response = await fetch(`${API_BASE}/admin/questions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          course,
-          day,
-          questions
-        })
-      });
-      return response.json();
-    } catch (error) {
-      console.error('API Error:', error);
-      throw error;
-    }
-  },
+  // addQuestions: async (course, day, questions) => {
+  //   try {
+  //     const token = localStorage.getItem('adminToken');
+  //     const response = await fetch(`${API_BASE}/admin/questions`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`
+  //       },
+  //       body: JSON.stringify({
+  //         course,
+  //         day,
+  //         questions
+  //       })
+  //     });
+  //     return response.json();
+  //   } catch (error) {
+  //     console.error('API Error:', error);
+  //     throw error;
+  //   }
+  // },
 
   // Get quiz questions
   getQuiz: async (course, day) => {
