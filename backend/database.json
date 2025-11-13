@@ -1,0 +1,39 @@
+{
+  "courses": {
+    "html": {
+      "name": "HTML",
+      "days": {
+        "day-1": {
+          "topic": "HTML Basics",
+          "description": "Learn fundamental HTML tags and structure",
+          "category": "basic",
+          "quizes": [
+            {
+              "id": 1731417600000,
+              "question": "What does HTML stand for?",
+              "options": [
+                "Hyper Text Markup Language",
+                "High Tech Modern Language",
+                "Hyper Transfer Markup Language",
+                "Home Tool Markup Language"
+              ],
+              "answer": 0,
+              "explanation": "HTML stands for Hyper Text Markup Language..."
+            }
+          ]
+        },
+        "day-2": {
+          "topic": "HTML Forms",
+          "description": "Learn about HTML form elements and attributes",
+          "category": "medium",
+          "quizes": []
+        }
+      }
+    }
+  },
+  "users": [],
+  "admin": {
+    "username": "admin",
+    "password": "admin123"
+  }
+}
