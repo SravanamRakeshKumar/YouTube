@@ -11,7 +11,7 @@ const TopicDetail = () => {
 
   useEffect(() => {
     loadTopicData();
-  }, [course, day]);
+  }, [course, day,loadTopicData]);
 
 
   const loadTopicData = async () => {
