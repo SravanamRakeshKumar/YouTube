@@ -508,10 +508,12 @@ app.get('/api/health', (req, res) => {
 
 // Start server
 // if (require.main === module) {
-app.listen(PORT, () => {
-  console.log(`🚀 Backend server running on http://localhost:${PORT}`);
-  console.log(`📊 API endpoints available at http://localhost:${PORT}/api`);
-  console.log(`🏥 Health check: http://localhost:${PORT}/api/health`);
-  console.log(`📝 Add questions endpoint: POST http://localhost:${PORT}/api/admin/questions`);
-});
+// app.listen(PORT, () => {
+//   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
+//   console.log(`📊 API endpoints available at http://localhost:${PORT}/api`);
+//   console.log(`🏥 Health check: http://localhost:${PORT}/api/health`);
+//   console.log(`📝 Add questions endpoint: POST http://localhost:${PORT}/api/admin/questions`);
+// });
 // }
+
+module.exports = app;
