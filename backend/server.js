@@ -88,8 +88,8 @@ const initializeDB = () => {
       },
       users: [],
       admin: {
-        username: "admin",
-        password: "admin123"
+        username: "notUsername",
+        password: "notPassword"
       }
     };
     fs.writeFileSync(DB_PATH, JSON.stringify(initialData, null, 2));
