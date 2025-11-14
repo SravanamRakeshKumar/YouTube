@@ -1,5 +1,5 @@
 // src/pages/AdminDashboard.js (Fixed)
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback,useMemo} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { api } from '../services/api';
 
@@ -19,15 +19,24 @@ const AdminDashboard = () => {
   const [availableCourses, setAvailableCourses] = useState([]);
 
   // Predefined courses with their icons
-  const predefinedCourses = [
-    { key: 'html', name: 'HTML', icon: 'fab fa-html5' },
-    { key: 'css', name: 'CSS', icon: 'fab fa-css3-alt' },
-    { key: 'javascript', name: 'JavaScript', icon: 'fab fa-js' },
-    { key: 'python', name: 'Python', icon: 'fab fa-python' },
-    { key: 'java', name: 'Java', icon: 'fab fa-java' },
-    { key: 'react', name: 'React', icon: 'fab fa-react' },
-    { key: 'c', name: 'C Programming', icon: 'fas fa-code' }
-  ];
+  const predefinedCourses = React.useMemo(() => [
+  { key: 'html', name: 'HTML', icon: 'fab fa-html5' },
+  { key: 'css', name: 'CSS', icon: 'fab fa-css3-alt' },
+  { key: 'javascript', name: 'JavaScript', icon: 'fab fa-js' },
+  { key: 'python', name: 'Python', icon: 'fab fa-python' },
+  { key: 'java', name: 'Java', icon: 'fab fa-java' },
+  { key: 'react', name: 'React', icon: 'fab fa-react' },
+  { key: 'c', name: 'C Programming', icon: 'fas fa-code' }
+], []);
+  // const predefinedCourses = [
+  //   { key: 'html', name: 'HTML', icon: 'fab fa-html5' },
+  //   { key: 'css', name: 'CSS', icon: 'fab fa-css3-alt' },
+  //   { key: 'javascript', name: 'JavaScript', icon: 'fab fa-js' },
+  //   { key: 'python', name: 'Python', icon: 'fab fa-python' },
+  //   { key: 'java', name: 'Java', icon: 'fab fa-java' },
+  //   { key: 'react', name: 'React', icon: 'fab fa-react' },
+  //   { key: 'c', name: 'C Programming', icon: 'fas fa-code' }
+  // ];
 
   const loadDashboardData = useCallback(async () => {
     try {
