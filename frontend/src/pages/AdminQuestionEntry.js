@@ -86,31 +86,61 @@ const AdminQuestionEntry = () => {
   };
 
   const handleSubmitDay = async () => {
-    if (questionsList.length === 0) {
-      alert('Please add at least one question before submitting!');
+  if (questionsList.length === 0) {
+    alert('Please add at least one question before submitting!');
+    return;
+  }
+
+  try {
+    // First create the day with topic and description
+    const dayResult = await api.addDay(course, currentDay, topic, description, category);
+    
+    if (!dayResult.success) {
+      alert('Failed to create day: ' + dayResult.message);
       return;
     }
 
-    try {
-      // Create day with topic, description, category AND questions
-      const result = await api.addDay(course, currentDay, {
-        topic: topic,
-        description: description,
-        category: category,
-        quizes: questionsList  // Add the questions list here
-      });
-      
-      if (result.success) {
-        alert(`Successfully submitted ${questionsList.length} questions for ${course} - ${currentDay}!`);
-        navigate('/admin/dashboard');
-      } else {
-        alert('Failed to submit questions. Please try again.');
-      }
-    } catch (error) {
-      console.error('Submit error:', error);
-      alert('Failed to submit questions. Please check your connection.');
+    // Then add questions to the created day
+    const questionsResult = await api.addQuestions(course, currentDay, questionsList);
+    
+    if (questionsResult.success) {
+      alert(`Successfully submitted ${questionsList.length} questions for ${course} - ${currentDay}!`);
+      navigate('/admin/dashboard');
+    } else {
+      alert('Failed to submit questions. Please try again.');
     }
-  };
+  } catch (error) {
+    console.error('Submit error:', error);
+    alert('Failed to submit questions. Please check your connection.');
+  }
+};
+
+  // const handleSubmitDay = async () => {
+  //   if (questionsList.length === 0) {
+  //     alert('Please add at least one question before submitting!');
+  //     return;
+  //   }
+
+  //   try {
+  //     // Create day with topic, description, category AND questions
+  //     const result = await api.addDay(course, currentDay, {
+  //       topic: topic,
+  //       description: description,
+  //       category: category,
+  //       quizes: questionsList  // Add the questions list here
+  //     });
+      
+  //     if (result.success) {
+  //       alert(`Successfully submitted ${questionsList.length} questions for ${course} - ${currentDay}!`);
+  //       navigate('/admin/dashboard');
+  //     } else {
+  //       alert('Failed to submit questions. Please try again.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Submit error:', error);
+  //     alert('Failed to submit questions. Please check your connection.');
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50">

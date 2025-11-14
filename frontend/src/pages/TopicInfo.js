@@ -15,7 +15,7 @@ const TopicInfo = () => {
 
 
   // In TopicInfo.js - update the handleSubmit function
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
   e.preventDefault();
   if (!topicName.trim() || !topicDescription.trim()) {
     alert('Please fill in both topic name and description');
@@ -25,17 +25,12 @@ const handleSubmit = async (e) => {
   setLoading(true);
   
   try {
-    // Create day with topic and description only (empty quizes array)
+    // Get next available day
     const nextDayData = await api.getNextDay(course);
     const day = nextDayData.nextDay;
     
-    // Add the day with topic and description AND category
-    const result = await api.addDay(course, day, {
-      topic: topicName,
-      description: topicDescription,
-      category: category, // Add category here
-      quizes: []
-    });
+    // Add the day with topic, description, and category - CORRECTED PARAMETERS
+    const result = await api.addDay(course, day, topicName, topicDescription, category);
     
     if (result.success) {
       alert('Topic added successfully!');
@@ -50,6 +45,41 @@ const handleSubmit = async (e) => {
     setLoading(false);
   }
 };
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   if (!topicName.trim() || !topicDescription.trim()) {
+//     alert('Please fill in both topic name and description');
+//     return;
+//   }
+  
+//   setLoading(true);
+  
+//   try {
+//     // Create day with topic and description only (empty quizes array)
+//     const nextDayData = await api.getNextDay(course);
+//     const day = nextDayData.nextDay;
+    
+//     // Add the day with topic and description AND category
+//     const result = await api.addDay(course, day, {
+//       topic: topicName,
+//       description: topicDescription,
+//       category: category, // Add category here
+//       quizes: []
+//     });
+    
+//     if (result.success) {
+//       alert('Topic added successfully!');
+//       navigate(`/admin/topic-selection?course=${course}`);
+//     } else {
+//       alert('Failed to add topic: ' + result.message);
+//     }
+//   } catch (error) {
+//     console.error('Error adding topic:', error);
+//     alert('Error adding topic');
+//   } finally {
+//     setLoading(false);
+//   }
+// };
 
   const handleAddWithQuestions = () => {
     if (!topicName.trim() || !topicDescription.trim()) {

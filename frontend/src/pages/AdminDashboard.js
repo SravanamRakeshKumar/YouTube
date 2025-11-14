@@ -97,38 +97,73 @@ const AdminDashboard = () => {
   };
 
   const handleAddCourse = async () => {
-    if (!selectedCourse) {
-      alert('Please select a course');
+  if (!selectedCourse) {
+    alert('Please select a course');
+    return;
+  }
+
+  try {
+    setAddingCourse(true);
+    const selectedCourseData = predefinedCourses.find(course => course.key === selectedCourse);
+    
+    if (!selectedCourseData) {
+      alert('Invalid course selection');
       return;
     }
 
-    try {
-      setAddingCourse(true);
-      const selectedCourseData = predefinedCourses.find(course => course.key === selectedCourse);
-      
-      if (!selectedCourseData) {
-        alert('Invalid course selection');
-        return;
-      }
-
-      const result = await api.addCourse(selectedCourseData.key, selectedCourseData.name, selectedCourseData.icon);
-      
-      if (result.success) {
-        alert(`Course "${selectedCourseData.name}" added successfully!`);
-        setShowAddCoursePopup(false);
-        setSelectedCourse('');
-        // Reload dashboard data to show the new course
-        loadDashboardData();
-      } else {
-        alert('Failed to add course: ' + result.message);
-      }
-    } catch (error) {
-      console.error('Error adding course:', error);
-      alert('Error adding course');
-    } finally {
-      setAddingCourse(false);
+    // Remove the icon parameter since backend doesn't use it
+    const result = await api.addCourse(selectedCourseData.key, selectedCourseData.name);
+    
+    if (result.success) {
+      alert(`Course "${selectedCourseData.name}" added successfully!`);
+      setShowAddCoursePopup(false);
+      setSelectedCourse('');
+      // Reload dashboard data to show the new course
+      loadDashboardData();
+    } else {
+      alert('Failed to add course: ' + result.message);
     }
-  };
+  } catch (error) {
+    console.error('Error adding course:', error);
+    alert('Error adding course');
+  } finally {
+    setAddingCourse(false);
+  }
+};
+
+  // const handleAddCourse = async () => {
+  //   if (!selectedCourse) {
+  //     alert('Please select a course');
+  //     return;
+  //   }
+
+  //   try {
+  //     setAddingCourse(true);
+  //     const selectedCourseData = predefinedCourses.find(course => course.key === selectedCourse);
+      
+  //     if (!selectedCourseData) {
+  //       alert('Invalid course selection');
+  //       return;
+  //     }
+
+  //     const result = await api.addCourse(selectedCourseData.key, selectedCourseData.name, selectedCourseData.icon);
+      
+  //     if (result.success) {
+  //       alert(`Course "${selectedCourseData.name}" added successfully!`);
+  //       setShowAddCoursePopup(false);
+  //       setSelectedCourse('');
+  //       // Reload dashboard data to show the new course
+  //       loadDashboardData();
+  //     } else {
+  //       alert('Failed to add course: ' + result.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error adding course:', error);
+  //     alert('Error adding course');
+  //   } finally {
+  //     setAddingCourse(false);
+  //   }
+  // };
 
   const StatCard = ({ title, value, icon, color }) => (
     <div className="card-hover bg-white rounded-xl shadow-lg p-6 border border-gray-200">
