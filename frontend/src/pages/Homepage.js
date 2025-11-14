@@ -1,3 +1,68 @@
+// // src/pages/Homepage.js (Fixed)
+// import React, { useState } from 'react';
+// import { Link } from 'react-router-dom';
+
+// const Homepage = () => {
+//   const [feedback, setFeedback] = useState('');
+//   const [message, setMessage] = useState('');
+
+//   const courses = [
+//     { name: 'HTML', icon: 'fab fa-html5', color: 'from-orange-500 to-red-500', started: true },
+//     { name: 'CSS', icon: 'fab fa-css3-alt', color: 'from-blue-500 to-teal-500', started: true },
+//     { name: 'JavaScript', icon: 'fab fa-js', color: 'from-yellow-500 to-orange-500', started: true },
+//     { name: 'Python', icon: 'fab fa-python', color: 'from-green-500 to-blue-500', started: false },
+//     { name: 'Java', icon: 'fab fa-java', color: 'from-red-500 to-orange-500', started: false },
+//     { name: 'React', icon: 'fab fa-react', color: 'from-cyan-500 to-blue-500', started: false },
+//     { name: 'C Programming', icon: 'fas fa-code', color: 'from-gray-500 to-blue-500', started: false },
+//   ];
+
+//   const socialLinks = [
+//     { icon: 'fab fa-youtube', url: '#', color: 'hover:text-red-600' },
+//     { icon: 'fab fa-github', url: '#', color: 'hover:text-gray-800' },
+//     { icon: 'fab fa-instagram', url: '#', color: 'hover:text-pink-600' },
+//     { icon: 'fas fa-envelope', url: '#', color: 'hover:text-blue-600' },
+//   ];
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+//       {/* Navigation */}
+//       <nav className="bg-white shadow-lg">
+//         <div className="container mx-auto px-6 py-4">
+//           <div className="flex justify-between items-center">
+//             <div className="text-2xl font-bold gradient-text bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+//               Why Not You
+//             </div>
+//             <div className="space-x-4">
+//               <Link to="/admin/login" className="text-gray-600 hover:text-blue-600 transition-colors">
+//                 Admin
+//               </Link>
+//             </div>
+//           </div>
+//         </div>
+//       </nav>
+
+//       {/* Hero Section */}
+//       <section className="py-20 gradient-bg text-white">
+//         <div className="container mx-auto px-6 text-center">
+//           <div className="w-72 h-72 mx-auto mb-6 rounded-full bg-white shadow-lg overflow-hidden">
+//             <img 
+//               src=""
+//               alt="Profile" 
+//               className="w-full h-full object-cover"
+//             />
+//           </div>
+//           <h1 className="text-5xl font-bold mb-4">Welcome to Why Not You</h1>
+//           <p className="text-xl mb-8 opacity-90">Learn Web Development Day by Day with Interactive Quizzes</p>
+//           <div className="flex justify-center space-x-4">
+//             <a href="#courses" className="btn-primary bg-white text-blue-600 hover:bg-gray-100">
+//               Start Learning
+//             </a>
+//             <a href="#contact" className="btn-primary bg-transparent border-2 border-white hover:bg-white hover:text-blue-600">
+//               Contact Me
+//             </a>
+//           </div>
+//         </div>
+//       </section>
 // src/pages/Homepage.js (Fixed)
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -44,12 +109,8 @@ const Homepage = () => {
       {/* Hero Section */}
       <section className="py-20 gradient-bg text-white">
         <div className="container mx-auto px-6 text-center">
-          <div className="w-72 h-72 mx-auto mb-6 rounded-full bg-white shadow-lg overflow-hidden">
-            <img 
-              src=""
-              alt="Profile" 
-              className="w-full h-full object-cover"
-            />
+          <div className="w-72 h-72 mx-auto mb-6 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 shadow-lg flex items-center justify-center">
+            <i className="fas fa-user-graduate text-8xl text-white opacity-80"></i>
           </div>
           <h1 className="text-5xl font-bold mb-4">Welcome to Why Not You</h1>
           <p className="text-xl mb-8 opacity-90">Learn Web Development Day by Day with Interactive Quizzes</p>
@@ -63,6 +124,8 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+
+
 
       {/* Courses Section */}
       <section id="courses" className="py-20 bg-white">

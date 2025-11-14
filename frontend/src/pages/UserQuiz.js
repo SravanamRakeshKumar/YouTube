@@ -1,11 +1,52 @@
-// src/pages/UserQuiz.js
-import React, { useState, useEffect } from 'react';
+// // src/pages/UserQuiz.js
+// import React, { useState, useEffect } from 'react';
+// import { useParams, Link } from 'react-router-dom';
+// import { api } from '../services/api';
+
+// const UserQuiz = () => {
+
+//      const { course, day } = useParams();
+//   const [questions, setQuestions] = useState([]);
+//   const [currentQuestion, setCurrentQuestion] = useState(0);
+//   const [selectedAnswers, setSelectedAnswers] = useState({});
+//   const [showResults, setShowResults] = useState(false);
+//   const [showExplanation, setShowExplanation] = useState(null);
+//   const [quizStarted, setQuizStarted] = useState(false);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState('');
+
+
+//  useEffect(() => {
+//     const loadQuiz = async () => {
+//       setLoading(true);
+//       setError('');
+//       try {
+//         const result = await api.getQuiz(course, day);
+//         if (result.success) {
+//           setQuestions(result.questions);
+//         } else {
+//           setError(result.message || 'Quiz not found');
+//         }
+//       } catch (err) {
+//         setError('Failed to load quiz. Please check your connection.');
+//         console.error('Quiz load error:', err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     if (course && day) {
+//       loadQuiz();
+//     }
+//   }, [course, day]);
+
+// src/pages/UserQuiz.js (Fixed)
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
 
 const UserQuiz = () => {
-
-     const { course, day } = useParams();
+  const { course, day } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -15,30 +56,29 @@ const UserQuiz = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-
- useEffect(() => {
-    const loadQuiz = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const result = await api.getQuiz(course, day);
-        if (result.success) {
-          setQuestions(result.questions);
-        } else {
-          setError(result.message || 'Quiz not found');
-        }
-      } catch (err) {
-        setError('Failed to load quiz. Please check your connection.');
-        console.error('Quiz load error:', err);
-      } finally {
-        setLoading(false);
+  const loadQuiz = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const result = await api.getQuiz(course, day);
+      if (result.success) {
+        setQuestions(result.questions);
+      } else {
+        setError(result.message || 'Quiz not found');
       }
-    };
+    } catch (err) {
+      setError('Failed to load quiz. Please check your connection.');
+      console.error('Quiz load error:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [course, day]);
 
+  useEffect(() => {
     if (course && day) {
       loadQuiz();
     }
-  }, [course, day]);
+  }, [course, day, loadQuiz]);
 
 
   if (loading) {

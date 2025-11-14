@@ -1,5 +1,51 @@
-// src/pages/TopicDetail.js
-import React, { useState, useEffect } from 'react';
+// // src/pages/TopicDetail.js
+// import React, { useState, useEffect } from 'react';
+// import { useParams, Link, useNavigate } from 'react-router-dom';
+// import { api } from '../services/api';
+
+// const TopicDetail = () => {
+//   const { course, day } = useParams();
+//   const navigate = useNavigate();
+//   const [topicData, setTopicData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     loadTopicData();
+//   }, [course, day,loadTopicData]);
+
+
+//   const loadTopicData = async () => {
+//   try {
+//     setLoading(true);
+//     const data = await api.getTopicDetail(course, day);
+    
+//     console.log('Topic detail data:', data); // ADD THIS DEBUG LOG
+    
+//     if (data.success) {
+//       setTopicData(data);
+//     } else {
+//       console.error('Failed to load topic data:', data.message);
+//     }
+//   } catch (error) {
+//     console.error('Error loading topic data:', error);
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+//   if (loading) {
+//     return (
+//       <div className="min-h-screen flex items-center justify-center">
+//         <div className="text-center">
+//           <i className="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+//           <p className="text-xl text-gray-600">Loading topic details...</p>
+//         </div>
+//       </div>
+//     );
+//   }
+
+// src/pages/TopicDetail.js (Fixed)
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 
@@ -9,29 +55,28 @@ const TopicDetail = () => {
   const [topicData, setTopicData] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const loadTopicData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await api.getTopicDetail(course, day);
+      
+      console.log('Topic detail data:', data);
+      
+      if (data.success) {
+        setTopicData(data);
+      } else {
+        console.error('Failed to load topic data:', data.message);
+      }
+    } catch (error) {
+      console.error('Error loading topic data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [course, day]);
+
   useEffect(() => {
     loadTopicData();
-  }, [course, day,loadTopicData]);
-
-
-  const loadTopicData = async () => {
-  try {
-    setLoading(true);
-    const data = await api.getTopicDetail(course, day);
-    
-    console.log('Topic detail data:', data); // ADD THIS DEBUG LOG
-    
-    if (data.success) {
-      setTopicData(data);
-    } else {
-      console.error('Failed to load topic data:', data.message);
-    }
-  } catch (error) {
-    console.error('Error loading topic data:', error);
-  } finally {
-    setLoading(false);
-  }
-};
+  }, [loadTopicData]);
 
   if (loading) {
     return (
@@ -43,6 +88,8 @@ const TopicDetail = () => {
       </div>
     );
   }
+
+  // Rest of the code remains the same..
 
   if (!topicData) {
     return (
