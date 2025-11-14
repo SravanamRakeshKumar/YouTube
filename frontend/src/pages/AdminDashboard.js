@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   const [availableCourses, setAvailableCourses] = useState([]);
 
   // Predefined courses with their icons
-  const predefinedCourses = React.useMemo(() => [
+  const predefinedCourses = useMemo(() => [
   { key: 'html', name: 'HTML', icon: 'fab fa-html5' },
   { key: 'css', name: 'CSS', icon: 'fab fa-css3-alt' },
   { key: 'javascript', name: 'JavaScript', icon: 'fab fa-js' },
