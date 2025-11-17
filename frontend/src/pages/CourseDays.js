@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
+import Footer from '../components/footer';
 
 const CourseDays = () => {
   const { course } = useParams();
@@ -85,6 +86,7 @@ const CourseDays = () => {
   }
 
   return (
+    <>
     <div className="min-h-screen bg-gray-50 py-8">
       {/* Header */}
       <header className="bg-white shadow-lg">
@@ -178,7 +180,12 @@ const CourseDays = () => {
           </div>
         )}
       </div>
+       
     </div>
+    <Footer />
+    </>
+    
+    
   );
 };
 

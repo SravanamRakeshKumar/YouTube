@@ -1,53 +1,9 @@
-// // src/pages/TopicDetail.js
-// import React, { useState, useEffect } from 'react';
-// import { useParams, Link, useNavigate } from 'react-router-dom';
-// import { api } from '../services/api';
-
-// const TopicDetail = () => {
-//   const { course, day } = useParams();
-//   const navigate = useNavigate();
-//   const [topicData, setTopicData] = useState(null);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     loadTopicData();
-//   }, [course, day,loadTopicData]);
-
-
-//   const loadTopicData = async () => {
-//   try {
-//     setLoading(true);
-//     const data = await api.getTopicDetail(course, day);
-    
-//     console.log('Topic detail data:', data); // ADD THIS DEBUG LOG
-    
-//     if (data.success) {
-//       setTopicData(data);
-//     } else {
-//       console.error('Failed to load topic data:', data.message);
-//     }
-//   } catch (error) {
-//     console.error('Error loading topic data:', error);
-//   } finally {
-//     setLoading(false);
-//   }
-// };
-
-//   if (loading) {
-//     return (
-//       <div className="min-h-screen flex items-center justify-center">
-//         <div className="text-center">
-//           <i className="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
-//           <p className="text-xl text-gray-600">Loading topic details...</p>
-//         </div>
-//       </div>
-//     );
-//   }
 
 // src/pages/TopicDetail.js (Fixed)
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
+import Footer from '../components/footer';
 
 const TopicDetail = () => {
   const { course, day } = useParams();
@@ -104,7 +60,8 @@ const TopicDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <>
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-lg">
         <div className="container mx-auto px-6 py-4">
@@ -125,8 +82,9 @@ const TopicDetail = () => {
       <div className="container mx-auto px-6 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">{topicData.topic}</h2>
-            <p className="text-lg text-gray-600 mb-6">{topicData.description}</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4 break-all">{topicData.topic}</h2>
+            {/* <p className="text-lg text-gray-600 mb-6">{topicData.description}</p> */}
+            <p className="text-lg text-gray-600 mb-6 whitespace-pre-line break-all">{topicData.description}</p>
             
             <div className="flex items-center space-x-4 text-sm text-gray-500">
               {topicData.category && (
@@ -165,19 +123,22 @@ const TopicDetail = () => {
                 <p className="text-gray-600 mb-6">
                   This topic doesn't have any quiz questions yet.
                 </p>
-                <button
+                {/* <button
                   onClick={() => navigate('/admin/login')}
                   className="btn-primary"
                 >
                   <i className="fas fa-plus mr-2"></i>
                   Add Quiz Questions (Admin)
-                </button>
+                </button> */}
               </div>
             )}
           </div>
         </div>
       </div>
     </div>
+    <Footer />
+    </>
+    
   );
 };
 

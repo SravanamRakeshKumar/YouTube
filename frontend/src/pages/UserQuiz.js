@@ -101,7 +101,7 @@ const UserQuiz = () => {
           <p className="text-gray-600 mb-4">{error}</p>
           <Link to="/" className="btn-primary">
             <i className="fas fa-home mr-2"></i>
-            Back to Home
+            Home
           </Link>
         </div>
       </div>
@@ -179,7 +179,7 @@ const UserQuiz = () => {
             <div className="mt-6">
               <Link to="/" className="text-blue-600 hover:text-blue-800 transition-colors">
                 <i className="fas fa-home mr-2"></i>
-                Back to Home
+                Home
               </Link>
             </div>
           </div>
@@ -260,7 +260,7 @@ const UserQuiz = () => {
                     <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
                       <div className="flex items-start">
                         <i className="fas fa-lightbulb text-blue-500 text-xl mr-3 mt-1"></i>
-                        <p className="text-blue-800">{question.explanation}</p>
+                        <p className="text-blue-800 whitespace-pre-line">{question.explanation}</p>
                       </div>
                     </div>
                   )}
@@ -283,7 +283,7 @@ const UserQuiz = () => {
               </button>
               <Link to="/" className="text-gray-600 hover:text-gray-800 transition-colors">
                 <i className="fas fa-home mr-2"></i>
-                Back to Home
+                Home
               </Link>
             </div>
           </div>

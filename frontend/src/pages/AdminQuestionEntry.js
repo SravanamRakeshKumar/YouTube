@@ -173,7 +173,7 @@ const AdminQuestionEntry = () => {
       <div className="container mx-auto px-6 py-6">
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
           <h3 className="text-xl font-bold text-blue-800 mb-2">{topic}</h3>
-          <p className="text-blue-700">{description}</p>
+          <p className="text-blue-700 whitespace-pre-line break-all">{description}</p>
           <div className="flex items-center mt-2 text-sm text-blue-600">
             <i className="fas fa-info-circle mr-2"></i>
             <span>Category: {category} | Course: {course} | Day: {currentDay}</span>

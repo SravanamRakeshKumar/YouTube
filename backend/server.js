@@ -13,12 +13,120 @@ connectDB();
 
 // Models
 const Course = require('./models/Course');
-const User = require('./models/User');
+// const User = require('./models/User');
 const Admin = require('./models/Admin');
+const Visitor = require('./models/Visitor');
+
+
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+
+app.get('/api/stats', async (req, res) => {
+  try {
+    const courses = await Course.find({});
+    const totalVisitors = await Visitor.countDocuments();
+    
+    let totalDays = 0;
+    let startedCourses = 0;
+    let totalQuestions = 0;
+
+    courses.forEach(course => {
+      const courseDays = course.days.length;
+      totalDays += courseDays;
+      if (courseDays > 0) {
+        startedCourses++;
+      }
+      // Count total questions
+      course.days.forEach(dayData => {
+        totalQuestions += dayData.quizes ? dayData.quizes.length : 0;
+      });
+    });
+    
+    const stats = {
+      totalCourses:7 , //courses.length,
+      startedCourses: startedCourses,
+      totalDays: totalDays,
+      totalQuestions: totalQuestions,
+      totalUsers: totalVisitors // Use Visitor count instead of User
+    };
+    
+    res.json(stats);
+  } catch (error) {
+    console.error('Get stats error:', error);
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+});
+
+// app.get('/api/stats', async (req, res) => {
+//   try {
+//     const totalUsers = await Visitor.countDocuments();
+    
+//     const totalCourses = 7;
+//     const startedCourses = 3;
+//     const totalDays = 30;
+
+//     res.json({
+//       totalCourses,
+//       startedCourses,
+//       totalDays,
+//       totalUsers
+//     });
+//   } catch (error) {
+//     console.error('Error getting stats:', error);
+//     res.status(500).json({ error: 'Failed to get statistics' });
+//   }
+// });
+
+app.post('/api/register-visit', async (req, res) => {
+  try {
+    const { deviceId, userAgent } = req.body;
+    
+    if (!deviceId) {
+      return res.status(400).json({ error: 'Device ID is required' });
+    }
+    
+    let visitor = await Visitor.findOne({ deviceId });
+    
+    if (!visitor) {
+      visitor = new Visitor({
+        deviceId: deviceId,
+        userAgent: userAgent || ''
+      });
+      await visitor.save();
+      
+      console.log(`New visitor registered: ${deviceId}`);
+      res.json({ 
+        success: true, 
+        isNewVisitor: true,
+        totalUsers: await Visitor.countDocuments()
+      });
+    } else {
+      visitor.lastVisit = new Date();
+      visitor.visitCount += 1;
+      await visitor.save();
+      
+      console.log(`Existing visitor returned: ${deviceId}, total visits: ${visitor.visitCount}`);
+      res.json({ 
+        success: true, 
+        isNewVisitor: false,
+        totalUsers: await Visitor.countDocuments()
+      });
+    }
+    
+  } catch (error) {
+    console.error('Error registering visit:', error);
+    
+    if (error.code === 11000) {
+      return res.status(409).json({ error: 'Visitor already exists' });
+    }
+    
+    res.status(500).json({ error: 'Failed to register visit' });
+  }
+});
+
 
 // Helper functions
 function getCourseIcon(course) {
@@ -455,6 +563,7 @@ const startServer = () => {
     console.log(`🚀 Backend server running on http://localhost:${PORT}`);
     console.log(`📊 API endpoints available at http://localhost:${PORT}/api`);
     console.log(`🏥 Health check: http://localhost:${PORT}/api/health`);
+    console.log(`👥 Visitor tracking: http://localhost:${PORT}/api/register-visit`);
   });
 };
 

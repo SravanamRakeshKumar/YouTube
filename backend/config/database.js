@@ -18,6 +18,7 @@ const initializeDefaultData = async () => {
   try {
     const Admin = require('../models/Admin');
     const Course = require('../models/Course');
+    const Visitor = require('../models/Visitor'); 
     
     // Check if admin exists - use different method
     const adminExists = await Admin.findOne({ username: process.env.ADMIN_USERNAME || 'notUsername' });
