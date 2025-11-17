@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { api } from '../services/api';
 import Footer from '../components/footer';
 
+
 const Homepage = () => {
   const [feedback, setFeedback] = useState('');
   const [message, setMessage] = useState('');
@@ -39,7 +40,7 @@ const Homepage = () => {
   };
 
   // Register visitor when page loads
-  const registerVisit = async () => {
+   const registerVisit = useCallback(async () => {
     try {
       const deviceId = getDeviceId();
       const userAgent = navigator.userAgent;
@@ -54,10 +55,26 @@ const Homepage = () => {
     } catch (error) {
       console.error('Error registering visit:', error);
     }
-  };
+  }, []); // Empt
+  // const registerVisit = async () => {
+  //   try {
+  //     const deviceId = getDeviceId();
+  //     const userAgent = navigator.userAgent;
+      
+  //     const response = await api.registerVisit(deviceId, userAgent);
+      
+  //     if (response.success) {
+  //       console.log('Visit registered successfully');
+  //       // Reload stats to get updated user count
+  //       loadStats();
+  //     }
+  //   } catch (error) {
+  //     console.error('Error registering visit:', error);
+  //   }
+  // };
 
   // Load statistics
-  const loadStats = async () => {
+   const loadStats = useCallback(async () => {
     try {
       setLoading(true);
       const statsData = await api.getStats();
@@ -69,15 +86,36 @@ const Homepage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+  // const loadStats = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const statsData = await api.getStats();
+  //     if (statsData && typeof statsData === 'object') {
+  //       setStats(statsData);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading stats:', error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   // Register visit when component mounts
+  //   registerVisit();
+    
+  //   // Load initial stats
+  //   loadStats();
+  // }, [registerVisit]);
+
+   useEffect(() => {
     // Register visit when component mounts
     registerVisit();
     
     // Load initial stats
     loadStats();
-  }, [registerVisit]);
+  }, [registerVisit, loadStats]); // N
 
   const StatCard = ({ title, value, icon, color, description }) => (
     <div className="card-hover bg-white rounded-xl shadow-lg p-6 border border-gray-200 transform transition-transform duration-300 hover:scale-105">
