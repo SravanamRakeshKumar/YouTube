@@ -77,7 +77,7 @@ const Homepage = () => {
     
     // Load initial stats
     loadStats();
-  }, []);
+  }, [registerVisit]);
 
   const StatCard = ({ title, value, icon, color, description }) => (
     <div className="card-hover bg-white rounded-xl shadow-lg p-6 border border-gray-200 transform transition-transform duration-300 hover:scale-105">

@@ -1,13 +1,13 @@
 
 // src/pages/TopicDetail.js (Fixed)
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { api } from '../services/api';
 import Footer from '../components/footer';
 
 const TopicDetail = () => {
   const { course, day } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [topicData, setTopicData] = useState(null);
   const [loading, setLoading] = useState(true);
 
